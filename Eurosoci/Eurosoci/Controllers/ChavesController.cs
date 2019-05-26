@@ -39,6 +39,13 @@ namespace Eurosoci.Controllers
         // GET: Chaves/Create
         public ActionResult Create()
         {
+            var TodosNumeros = db.Numeros
+                .OrderBy(n => n.EEstrela)
+                .ThenBy(n => n.Valor)
+                .ToList();
+
+            ViewBag.TodosNumeros = TodosNumeros;
+            
             ViewBag.TipoChaveFK = new SelectList(db.TipoChaves, "ID", "Tipo");
             return View();
         }
@@ -48,14 +55,44 @@ namespace Eurosoci.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Preco,TipoChaveFK")] Chaves chaves)
+        public ActionResult Create([Bind(Include = "ID,Preco,TipoChaveFK")] Chaves chaves, int[] numerosIds)
         {
+            if (numerosIds == null || numerosIds.Length == 0)
+            {
+                ModelState.AddModelError("", "Seleccione números e estrelas.");
+            }
+            else
+            {
+                // Temos números...
+                var todosNumeros = db.Numeros.Where(n => numerosIds.Contains(n.ID)).ToList();
+
+                var numeros = todosNumeros.Where(n => n.EEstrela == false).ToList();
+                var estrelas = todosNumeros.Where(n => n.EEstrela == true).ToList();
+
+                if(numeros.Count <5 || numeros.Count > 11 || estrelas.Count <2 || estrelas.Count > 12)
+                {
+                    ModelState.AddModelError("", "Seleccione o número correcto de números e estrelas");
+
+                }
+                else
+                {
+                    chaves.ListaNumeros = todosNumeros;
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 db.Chaves.Add(chaves);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            var TodosNumeros = db.Numeros
+                .OrderBy(n => n.EEstrela)
+                .ThenBy(n => n.Valor)
+                .ToList();
+
+            ViewBag.TodosNumeros = TodosNumeros;
 
             ViewBag.TipoChaveFK = new SelectList(db.TipoChaves, "ID", "Tipo", chaves.TipoChaveFK);
             return View(chaves);

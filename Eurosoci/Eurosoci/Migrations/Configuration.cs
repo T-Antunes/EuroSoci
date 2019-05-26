@@ -125,7 +125,9 @@ namespace Eurosoci.Migrations
                new Numeros {ID=61, Valor=11, EEstrela=true},
                new Numeros {ID=62, Valor=12, EEstrela=true},
             };
-            numeros.ForEach(nn => context.Numeros.AddOrUpdate(n => new { n.Valor, n.EEstrela }, nn));
+            context.Numeros.AddOrUpdate(n => new { n.Valor, n.EEstrela }, numeros.ToArray());
+
+            //numeros.ForEach(nn => context.Numeros.AddOrUpdate(n => new { n.Valor, n.EEstrela }, nn));
             context.SaveChanges();
 
             // adiciona PAGAMENTOS
@@ -153,38 +155,38 @@ namespace Eurosoci.Migrations
 
             // adiciona CHAVES
             var chaves = new List<Chaves> {
-               new Chaves {ID=1,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=17}, new Numeros{ID=28}, new Numeros{ID=35}, new Numeros{ID=47}, new Numeros{ID=57}, new Numeros{ID=61}, new Numeros{ID=12}} },
-               new Chaves {ID=2,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=8}, new Numeros{ID=16}, new Numeros{ID=40}, new Numeros{ID=43}, new Numeros{ID=55}, new Numeros{ID=58}, new Numeros{ID=3}} },
-               new Chaves {ID=3,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=29}, new Numeros{ID=33}, new Numeros{ID=45}, new Numeros{ID=47}, new Numeros{ID=54}, new Numeros{ID=58}, new Numeros{ID=1}} },
-               new Chaves {ID=4,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=27}, new Numeros{ID=39}, new Numeros{ID=46}, new Numeros{ID=48}, new Numeros{ID=61}, new Numeros{ID=62}, new Numeros{ID=14}} },
-               new Chaves {ID=5,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=25}, new Numeros{ID=34}, new Numeros{ID=48}, new Numeros{ID=50}, new Numeros{ID=56}, new Numeros{ID=57}, new Numeros{ID=5}} },
-               new Chaves {ID=6,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=27}, new Numeros{ID=33}, new Numeros{ID=39}, new Numeros{ID=50}, new Numeros{ID=54}, new Numeros{ID=56}, new Numeros{ID=15}} },
-               new Chaves {ID=7,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=16}, new Numeros{ID=25}, new Numeros{ID=39}, new Numeros{ID=44}, new Numeros{ID=57}, new Numeros{ID=61}, new Numeros{ID=3}} },
-               new Chaves {ID=8,  Preco=null, TipoChaveFK=2,ListaNumeros=new List<Numeros>{new Numeros{ID=23}, new Numeros{ID=28}, new Numeros{ID=30}, new Numeros{ID=44}, new Numeros{ID=53}, new Numeros{ID=57}, new Numeros{ID=20}} },
+               new Chaves {ID=1,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 12,17,28,35,47,57,61 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=2,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 3,8,16,40,43,55,58 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=3,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 1,29,33,45,47,54,58 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=4,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 14,27,39,46,48,61,62 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=5,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 5,25,34,48,50,56,57 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=6,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 15,27,33,39,50,54,56 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=7,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 3,16,25,39,44,57,61 }.Contains(n.ID)).ToList() },
+               new Chaves {ID=8,  Preco=null, TipoChaveFK=2,ListaNumeros=context.Numeros.Where(n => new[] { 20,23,28,30,44,53,57 }.Contains(n.ID)).ToList() },
             };
             chaves.ForEach(cc => context.Chaves.AddOrUpdate(c => c.ID, cc));
             context.SaveChanges();
 
             // adiciona CONCURSOS
             var concursos = new List<Concursos> {
-               new Concursos {ID="26/2018", ChaveFK=1,  DataConcurso=new DateTime(2018,3,30)},
-               new Concursos {ID="27/2018", ChaveFK=2,  DataConcurso=new DateTime(2018,4,3)},
-               new Concursos {ID="28/2018", ChaveFK=3,  DataConcurso=new DateTime(2018,4,6)},
-               new Concursos {ID="29/2018", ChaveFK=4,  DataConcurso=new DateTime(2018,4,10)},
-               new Concursos {ID="30/2018", ChaveFK=5,  DataConcurso=new DateTime(2018,4,13)},
-               new Concursos {ID="31/2018", ChaveFK=6,  DataConcurso=new DateTime(2018,4,17)},
-               new Concursos {ID="32/2018", ChaveFK=7,  DataConcurso=new DateTime(2018,4,20)},
-               new Concursos {ID="33/2018", ChaveFK=8,  DataConcurso=new DateTime(2018,4,24)},
-               new Concursos {ID="34/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,4,27)},
-               new Concursos {ID="35/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,1)},
-               new Concursos {ID="36/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,4)},
-               new Concursos {ID="37/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,8)},
-               new Concursos {ID="38/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,11)},
-               new Concursos {ID="39/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,15)},
-               new Concursos {ID="40/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,18)},
-               new Concursos {ID="41/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,22)},
+               new Concursos {NomeConcurso="26/2018", ChaveFK=1,  DataConcurso=new DateTime(2018,3,30)},
+               new Concursos {NomeConcurso="27/2018", ChaveFK=2,  DataConcurso=new DateTime(2018,4,3)},
+               new Concursos {NomeConcurso="28/2018", ChaveFK=3,  DataConcurso=new DateTime(2018,4,6)},
+               new Concursos {NomeConcurso="29/2018", ChaveFK=4,  DataConcurso=new DateTime(2018,4,10)},
+               new Concursos {NomeConcurso="30/2018", ChaveFK=5,  DataConcurso=new DateTime(2018,4,13)},
+               new Concursos {NomeConcurso="31/2018", ChaveFK=6,  DataConcurso=new DateTime(2018,4,17)},
+               new Concursos {NomeConcurso="32/2018", ChaveFK=7,  DataConcurso=new DateTime(2018,4,20)},
+               new Concursos {NomeConcurso="33/2018", ChaveFK=8,  DataConcurso=new DateTime(2018,4,24)},
+               new Concursos {NomeConcurso="34/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,4,27)},
+               new Concursos {NomeConcurso="35/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,1)},
+               new Concursos {NomeConcurso="36/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,4)},
+               new Concursos {NomeConcurso="37/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,8)},
+               new Concursos {NomeConcurso="38/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,11)},
+               new Concursos {NomeConcurso="39/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,15)},
+               new Concursos {NomeConcurso="40/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,18)},
+               new Concursos {NomeConcurso="41/2018", ChaveFK=null,  DataConcurso=new DateTime(2018,5,22)},
             };
-            concursos.ForEach(cc => context.Concursos.AddOrUpdate(c => c.ID, cc));
+            concursos.ForEach(cc => context.Concursos.AddOrUpdate(c => c.NomeConcurso, cc));
             context.SaveChanges();
 
 

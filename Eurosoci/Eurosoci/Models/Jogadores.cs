@@ -36,5 +36,12 @@ namespace Eurosoci.Models
         // Criar uma lista de Sociedades
         // às quais o Jogador pertence
         public virtual ICollection<Jog_Soc> ListaSociedades { get; set; }
+
+        //*********************************************************
+        // criar FK 'virtual' para a autenticação
+        //*********************************************************
+        //    [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+
+        //    public string UserName { get; set; }
     }
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de Concursos</h2>
 
 <p>
     @Html.ActionLink("Adicionar Concurso", "Create")
@@ -12,28 +12,48 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Concurso")
+            @Html.DisplayNameFor(model => model.NomeConcurso)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DataConcurso)
         </th>
-        <th></th>
+        <th>Chave</th>
+        
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataConcurso)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeConcurso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataConcurso)
+            </td>
+            <td>
+                @{ string chave = "";
+                    bool encontreiEstrela = false;
+                    if (item.ChaveSorteada != null)
+                    {
+                        foreach (var numero in item.ChaveSorteada.ListaNumeros.OrderBy(n => n.ID))
+                        {
+                            if (!encontreiEstrela && numero.EEstrela) { encontreiEstrela = true; }
+                            else { encontreiEstrela = false; }
+
+                            if (encontreiEstrela) { chave += "+ "; }
+
+                            chave += numero.Valor + " ";
+                        }
+                    }
+                }
+                <span>@chave</span>
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Apagar", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>

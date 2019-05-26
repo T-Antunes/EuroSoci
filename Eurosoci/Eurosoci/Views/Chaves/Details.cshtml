@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
     <h4>Chaves</h4>
@@ -26,9 +26,30 @@
             @Html.DisplayFor(model => model.Preco)
         </dd>
 
+        <dt>
+            Chave
+        </dt>
+
+        <dd>
+            @{ string chave = "";
+                bool encontreiEstrela = false;
+
+                foreach (var numero in Model.ListaNumeros.OrderBy(n => n.ID))
+                {
+                    if (!encontreiEstrela && numero.EEstrela) { encontreiEstrela = true; }
+                    else { encontreiEstrela = false; }
+
+                    if (encontreiEstrela) { chave += "+ "; }
+
+                    chave += numero.Valor + " ";
+                }
+
+            }
+            <span>@chave</span>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Lista de Chaves", "Index")
 </p>

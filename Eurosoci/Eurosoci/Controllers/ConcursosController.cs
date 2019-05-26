@@ -22,7 +22,7 @@ namespace Eurosoci.Controllers
         }
 
         // GET: Concursos/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -62,7 +62,7 @@ namespace Eurosoci.Controllers
         }
 
         // GET: Concursos/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -95,7 +95,7 @@ namespace Eurosoci.Controllers
         }
 
         // GET: Concursos/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -112,7 +112,7 @@ namespace Eurosoci.Controllers
         // POST: Concursos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Concursos concursos = db.Concursos.Find(id);
             db.Concursos.Remove(concursos);

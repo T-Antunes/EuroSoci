@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,7 @@ namespace Eurosoci.Models
         [Key]
         public int ID { get; set; }
 
+        [DisplayName("Preço")]
         public decimal? Preco { get; set; }
 
         // *******************************************

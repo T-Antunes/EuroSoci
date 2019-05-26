@@ -34,7 +34,7 @@ namespace Eurosoci.Models
         // especificação da chave forasteira
         // *******************************************
 
-        // FK para o Gestor                        <------ Confirmar
+        // FK para o Gestor
         [DisplayName("Gestor")]
         [ForeignKey("Gestor")]
         public int GestorFK { get; set; }
